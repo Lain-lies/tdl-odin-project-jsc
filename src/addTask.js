@@ -1,7 +1,6 @@
 import { tabFetchNewTask } from "./tabHandler";
-const task = {
-    
-};
+
+const task = {};
 
 function displayFetchDOM(){
     
@@ -23,19 +22,12 @@ function displayFormSubmit(event){
     const formData = new FormData(task.DOM);
     const valuesFromForm = [...formData.values()];
     
-    task.formValues = {
-        
-        name : valuesFromForm[0],
-        description : valuesFromForm[1]
-    }
-
-    tabFetchNewTask(task.formValues);
+    tabFetchNewTask(valuesFromForm);
 }
 
-export function displayINIT(){
+export function taskAdderINIT(){
     
     displayFetchDOM();
-    
 
 }
 
