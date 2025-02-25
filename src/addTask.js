@@ -21,12 +21,13 @@ function displayFormSubmit(event){
     event.preventDefault();
     const formData = new FormData(task.DOM);
     const valuesFromForm = [...formData.values()];
-    
+
+    console.log(valuesFromForm);
     tabFetchNewTask(valuesFromForm);
 }
 
 export function taskAdderINIT(){
-    
+
     displayFetchDOM();
 
 }
