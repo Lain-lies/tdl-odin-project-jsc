@@ -23,8 +23,6 @@ function createTask (name, description) {
 
     node.appendChild(nameField);
     node.appendChild(descriptionField);
-    node.setAttribute("readonly", "true");
-
 
     return {name, description, node};
 }
@@ -75,9 +73,46 @@ function init(){
     tabFetchDom();
 }
 
+function tabAddEditButtonToTask(task){
+
+    let nameField, descriptionField;
+    [nameField, descriptionField] = [...task.node.children];
+    console.log(`nameField = ${nameField}`);
+    console.log(`descField = ${descriptionField}`);
+
+    let mode = 0;
+    const editButton = document.createElement("button");
+    editButton.textContent = "edit";
+    editButton.addEventListener("click", () => {
+        
+        if(!mode){
+            
+            mode = 1;
+            editButton.textContent = "done";
+            nameField.removeAttribute("readonly", "true");
+            descriptionField.removeAttribute("readonly", "true");
+
+    
+        }else{
+
+            mode = 0;
+            editButton.textContent = "edit";
+            nameField.setAttribute("readonly", "true");
+            descriptionField.setAttribute("readonly", "true");
+            task.name = nameField.value;
+            task.description = descriptionField.value;
+            console.table(tab.dataList[tab.activeTab]);
+
+        }
+
+    });
+
+    task.node.appendChild(editButton);
+}
 export function tabFetchNewTask(newTask){
 
     const temp = createTask(...newTask);
+    tabAddEditButtonToTask(temp);
     tab.dataList[tab.activeTab].push(temp);
     displayAppendTask(temp.node);
     console.table(tab.dataList[tab.activeTab]);
