@@ -1,7 +1,5 @@
-import {init, getName} from "./addTask.js";
+import {displayINIT} from "./addTask.js";
+import {tabINIT, tabCreate} from "./tabHandler.js";
 
-
-console.log("test connection");
-
-init();
-console.log(getName()); 
+displayINIT();
+tabINIT();

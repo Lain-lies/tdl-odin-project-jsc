@@ -1,40 +1,41 @@
-const adder = {
+import { tabFetchNewTask } from "./tabHandler";
+const task = {
     
-    name : "Test",
 };
 
-function fetchDOM(){
+function displayFetchDOM(){
     
     const form = document.querySelector("form");
-
     console.log(form);
-
-    adder.DOM = form;
-    bind(form);
+    task.DOM = form;
+    displayBind(form);
 }
 
-function bind(form){
+function displayBind(form){
     
-    form.addEventListener("submit", formSubmit);
+    form.addEventListener("submit", displayFormSubmit);
 
 }
 
-function formSubmit(event){
+function displayFormSubmit(event){
     
     event.preventDefault();
-    const formData = new FormData(adder.DOM);
+    const formData = new FormData(task.DOM);
     const valuesFromForm = [...formData.values()];
+    
+    task.formValues = {
+        
+        name : valuesFromForm[0],
+        description : valuesFromForm[1]
+    }
 
-    console.log(valuesFromForm);
+    tabFetchNewTask(task.formValues);
 }
 
-export function getName(){
+export function displayINIT(){
     
-    return adder.name;
-}
+    displayFetchDOM();
+    
 
-export function init(){
-    
-    fetchDOM(); 
 }
 
