@@ -5,7 +5,6 @@ const task = {};
 function displayFetchDOM(){
     
     const form = document.querySelector("form");
-    console.log(form);
     task.DOM = form;
     displayBind(form);
 }
@@ -31,4 +30,5 @@ export function taskAdderINIT(){
     displayFetchDOM();
 
 }
+
 

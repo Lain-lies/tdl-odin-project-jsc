@@ -1,30 +1,67 @@
 import {displayShowAllTask, displayAppendTask} from "./display.js";
+import {dbFetchLoadCount, dbLoadAll, dbSync, dbUpdateLoadCount} from "./storageHandler.js";
+
 const tab = {
     
     activeTab : 0,
-    defaultTabCount : 3,
-    dataList : [[], [], []]
+    activeTabCount : 3,
+    dataList : [],
+    nodeList : [],
 
 };
 
 function createTask (name, description) {
     
-    const node = document.createElement("div");
+    return {name, description};
 
+}
+
+function createNode(task){
+    
+    const parent = document.createElement("div");
     const nameField = document.createElement("input");
     nameField.setAttribute("type", "text");
     nameField.setAttribute("readonly", "true");
-    nameField.value = name;
+    nameField.value = task.name;
 
     const descriptionField = document.createElement("input");
     descriptionField.setAttribute("type", "text");
     descriptionField.setAttribute("readonly", "true");
-    descriptionField.value = description;
+    descriptionField.value = task.description;
 
-    node.appendChild(nameField);
-    node.appendChild(descriptionField);
+    let mode = 0;
+    const editButton = document.createElement("button");
+    editButton.textContent = "edit";
+    editButton.addEventListener("click", () => {
+        
+        if(!mode){
+            
+            mode = 1;
+            editButton.textContent = "done";
+            nameField.removeAttribute("readonly", "true");
+            descriptionField.removeAttribute("readonly", "true");
 
-    return {name, description, node};
+        }else{
+
+            mode = 0;
+            editButton.textContent = "edit";
+            nameField.setAttribute("readonly", "true");
+            descriptionField.setAttribute("readonly", "true");
+            task.name = nameField.value;
+            task.description = descriptionField.value;
+            console.table(tab.dataList[tab.activeTab]);
+
+        }
+
+        dbSync(`${tab.activeTab}`, tab.dataList[tab.activeTab]);
+
+    });
+
+    parent.appendChild(nameField);
+    parent.appendChild(descriptionField);
+    parent.appendChild(editButton);
+
+    return parent;
 }
 
 function tabFetchDom(){
@@ -46,76 +83,77 @@ function tabBindDefaults(){
 function tabSwitch(event){
 
     tab.activeTab = tab.buttonList.indexOf(event.target);
-    displayShowAllTask(bundleNodes());
+    displayShowAllTask(tab.nodeList[tab.activeTab]);
     console.log(`active tab : ${tab.activeTab}`);    
 }
 
 function tabCreate(){
 
     const newTab = document.createElement("button");
-    newTab.textContent = "Sample";
-
+    newTab.textContent = "New Tab";
     newTab.addEventListener("click", tabSwitch);
+
     tab.parent.appendChild(newTab);
     tab.buttonList.push(newTab);
     tab.dataList.push([]);
-
-}
-
-function bundleNodes(){
-
-    return tab.dataList[tab.activeTab].map(task => task.node);
+    tab.nodeList.push([]);
+    tab.activeTabCount++;
+    
+    dbUpdateLoadCount();
 
 }
 
 function init(){
-
-    tabFetchDom();
-}
-
-function tabAddEditButtonToTask(task){
-
-    let nameField, descriptionField;
-    [nameField, descriptionField] = [...task.node.children];
-    console.log(`nameField = ${nameField}`);
-    console.log(`descField = ${descriptionField}`);
-
-    let mode = 0;
-    const editButton = document.createElement("button");
-    editButton.textContent = "edit";
-    editButton.addEventListener("click", () => {
-        
-        if(!mode){
-            
-            mode = 1;
-            editButton.textContent = "done";
-            nameField.removeAttribute("readonly", "true");
-            descriptionField.removeAttribute("readonly", "true");
-
     
+    tabFetchDom();
+    tab.activeTabCount = dbFetchLoadCount();
+
+    for(let i = 0; i < tab.activeTabCount; i++){
+
+        const content = dbLoadAll(`${i}`);
+
+        if(content === null){
+            
+            tab.dataList.push([]);
+            tab.nodeList.push([]);
+
         }else{
 
-            mode = 0;
-            editButton.textContent = "edit";
-            nameField.setAttribute("readonly", "true");
-            descriptionField.setAttribute("readonly", "true");
-            task.name = nameField.value;
-            task.description = descriptionField.value;
-            console.table(tab.dataList[tab.activeTab]);
+            tab.dataList.push(content);
+            tab.nodeList.push([]);
+            content.forEach(task => tab.nodeList[i].push(createNode(task)));
 
         }
 
-    });
+    }
 
-    task.node.appendChild(editButton);
+
+    console.log(tab.dataList)
+    console.log(tab.nodeList);
+    
+    if(tab.dataList[0] !== undefined || tab.dataList[0].length !== 0){
+
+        displayShowAllTask(tab.nodeList[tab.activeTab]);
+
+    }
+
 }
+
 export function tabFetchNewTask(newTask){
 
+    alert("test");
     const temp = createTask(...newTask);
-    tabAddEditButtonToTask(temp);
+    const tempNode = createNode(temp);
+
     tab.dataList[tab.activeTab].push(temp);
-    displayAppendTask(temp.node);
+    tab.nodeList[tab.activeTab].push(tempNode);
+
+    displayAppendTask(tempNode);
+
     console.table(tab.dataList[tab.activeTab]);
+
+    dbSync(tab.activeTab, tab.dataList[tab.activeTab]);
+
 
 }
 

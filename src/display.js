@@ -9,19 +9,25 @@ function displayFetchDOM(){
 }
 
 export function displayShowAllTask(DOMList){
-    console.log(`current content = ${display.content}`);
 
+    console.log(`current content = ${display.content}`);
     displayClearAll();
+
+    if(DOMList === undefined || DOMList.length === 0){
+        
+        return;
+    }
+
     DOMList.forEach(element => {
         
         display.parent.appendChild(element);
         display.content.push(element);
+        
     });
 
 }
 
 export function displayAppendTask(task){
-    console.log(`current content = ${display.content}`);
 
     display.parent.appendChild(task);
     display.content.push(task);
