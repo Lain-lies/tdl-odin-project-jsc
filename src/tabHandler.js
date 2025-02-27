@@ -1,5 +1,5 @@
 import {displayShowAllTask, displayAppendTask} from "./display.js";
-import {dbFetchLoadCount, dbLoadAll, dbSync, dbUpdateLoadCount} from "./storageHandler.js";
+import {dbFetchLoadCount, dbLoadAll, dbSync, dbSyncLoadCount} from "./storageHandler.js";
 
 const tab = {
     
@@ -99,11 +99,11 @@ function tabCreate(){
     tab.nodeList.push([]);
     tab.activeTabCount++;
     
-    dbUpdateLoadCount();
+    dbSyncLoadCount()
 
 }
 
-function init(){
+export function tabINIT(){
     
     tabFetchDom();
     tab.activeTabCount = dbFetchLoadCount();
@@ -141,7 +141,6 @@ function init(){
 
 export function tabFetchNewTask(newTask){
 
-    alert("test");
     const temp = createTask(...newTask);
     const tempNode = createNode(temp);
 
@@ -157,4 +156,4 @@ export function tabFetchNewTask(newTask){
 
 }
 
-init();
+

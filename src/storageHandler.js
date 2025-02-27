@@ -1,7 +1,6 @@
 
 const dbState = {
     
-    operation : false,
     loadCount : 3,
 }
 
@@ -30,4 +29,23 @@ export function dbSync(key, value){
     localStorage.setItem(`${key}`, JSON.stringify(value));
     
 }
+
+export function dbSyncLoadCount(){
+
+    dbState.loadCount++;
+    localStorage.setItem("load", JSON.stringify(dbState.loadCount));
+
+}
+
+export function dbINIT(){
+
+    
+    const load = JSON.parse(localStorage.getItem("load"));
+
+    // If on initial state or OOB
+    if(load !== null) dbState.loadCount = load; 
+
+
+}
+
 

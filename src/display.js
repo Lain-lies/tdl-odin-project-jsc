@@ -43,9 +43,8 @@ function displayClearAll(){
 
 }
 
-function displayINIT(){
+export function displayINIT(){
 
     displayFetchDOM();
 }
 
-displayINIT();
