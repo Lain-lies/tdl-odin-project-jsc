@@ -4,16 +4,11 @@ const dbState = {
     loadCount : 3,
 }
 
-export function dbUpdateLoadCount(){
-    
-    dbState.loadCount++;
-
-    console.log(`Load Count: ${dbState.loadCount}`);
-}
-
 export function dbFetchLoadCount(){
     
+    
     return dbState.loadCount;
+
 }
 
 export function dbLoadAll(key){

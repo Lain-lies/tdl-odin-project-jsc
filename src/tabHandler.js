@@ -4,7 +4,6 @@ import {dbFetchLoadCount, dbLoadAll, dbSync, dbSyncLoadCount} from "./storageHan
 const tab = {
     
     activeTab : 0,
-    activeTabCount : 3,
     dataList : [],
     nodeList : [],
 
@@ -84,6 +83,7 @@ function tabSwitch(event){
 
     tab.activeTab = tab.buttonList.indexOf(event.target);
     displayShowAllTask(tab.nodeList[tab.activeTab]);
+    event.target.style.background = "red";
     console.log(`active tab : ${tab.activeTab}`);    
 }
 
@@ -97,36 +97,60 @@ function tabCreate(){
     tab.buttonList.push(newTab);
     tab.dataList.push([]);
     tab.nodeList.push([]);
-    tab.activeTabCount++;
-    
+
     dbSyncLoadCount()
+
+}
+
+function tabCreateINIT(){
+
+    const newTab = document.createElement("button");
+    newTab.textContent = "New Tab";
+    newTab.addEventListener("click", tabSwitch);
+
+    tab.parent.appendChild(newTab);
+    tab.buttonList.push(newTab);
+    tab.dataList.push([]);
+    tab.nodeList.push([]);
 
 }
 
 export function tabINIT(){
     
     tabFetchDom();
-    tab.activeTabCount = dbFetchLoadCount();
 
-    for(let i = 0; i < tab.activeTabCount; i++){
+    const load = dbFetchLoadCount();
+    console.log(load)
+
+    for(let i = 0; i < load; i++){
 
         const content = dbLoadAll(`${i}`);
+        console.log(load);
 
-        if(content === null){
+        if(i < 3){
+
+            if(content === null){
+                tab.dataList.push([]);
+                tab.nodeList.push([]);
+                continue;
             
-            tab.dataList.push([]);
-            tab.nodeList.push([]);
+            }else{
+
+
+                tab.dataList.push(content);
+                tab.nodeList.push([]);
+                content.forEach(task => tab.nodeList[i].push(createNode(task)));
+            }
 
         }else{
 
-            tab.dataList.push(content);
-            tab.nodeList.push([]);
+            tabCreateINIT();
+            if(content === null) continue;
             content.forEach(task => tab.nodeList[i].push(createNode(task)));
 
         }
-
+    
     }
-
 
     console.log(tab.dataList)
     console.log(tab.nodeList);
