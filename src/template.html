@@ -5,12 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        
-        button:focus{
-            background-color: red;
-        }
-    </style>
+
 </head>
 
 
@@ -18,11 +13,19 @@
     
     <nav>
 
-        <button>Main</button>
-        <button>Favorites</button>
-        <button>Project</button>
+        <div id = "default-tabs">
 
-        <button id = "add">Add</button>  
+            <button class = "nav-tabs">Main</button>
+            <button class = "nav-tabs">Favorites</button>
+            <button class = "nav-tabs">Project</button>
+
+        </div>
+
+        <div id = "divider"></div>
+        <button id = "add" class = "nav-tabs">Add Projects +</button>  
+
+        <div id = "dynamic-tabs"></div>
+
     </nav>
     
     <form>

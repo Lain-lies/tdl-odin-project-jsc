@@ -65,8 +65,8 @@ function createNode(task){
 
 function tabFetchDom(){
     
-    tab.parent = document.querySelector("nav");
-    tab.buttonList = [...document.querySelectorAll("nav button:not(#add)")];
+    tab.parent = document.querySelector("#dynamic-tabs");
+    tab.buttonList = [...document.querySelector("#default-tabs").children];
     tab.addButton = document.querySelector("#add");
     
     tabBindDefaults();
@@ -83,7 +83,6 @@ function tabSwitch(event){
 
     tab.activeTab = tab.buttonList.indexOf(event.target);
     displayShowAllTask(tab.nodeList[tab.activeTab]);
-    event.target.style.background = "red";
     console.log(`active tab : ${tab.activeTab}`);    
 }
 
@@ -91,6 +90,7 @@ function tabCreate(){
 
     const newTab = document.createElement("button");
     newTab.textContent = "New Tab";
+    newTab.classList.add("nav-tabs");
     newTab.addEventListener("click", tabSwitch);
 
     tab.parent.appendChild(newTab);
@@ -106,6 +106,7 @@ function tabCreateINIT(){
 
     const newTab = document.createElement("button");
     newTab.textContent = "New Tab";
+    newTab.classList.add("nav-tabs");
     newTab.addEventListener("click", tabSwitch);
 
     tab.parent.appendChild(newTab);

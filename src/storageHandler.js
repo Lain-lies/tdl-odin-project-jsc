@@ -29,7 +29,7 @@ export function dbSyncLoadCount(){
 
     dbState.loadCount++;
     localStorage.setItem("load", JSON.stringify(dbState.loadCount));
-
+    console.log(dbState.loadCount);
 }
 
 export function dbINIT(){

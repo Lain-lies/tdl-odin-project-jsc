@@ -10,7 +10,6 @@ function displayFetchDOM(){
 
 export function displayShowAllTask(DOMList){
 
-    console.log(`current content = ${display.content}`);
     displayClearAll();
 
     if(DOMList === undefined || DOMList.length === 0){
@@ -35,8 +34,6 @@ export function displayAppendTask(task){
 }
 
 function displayClearAll(){
-
-    console.log(`current content = ${display.content}`);
 
     display.content.forEach(element => display.parent.removeChild(element));
     display.content = [];

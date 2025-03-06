@@ -1,3 +1,4 @@
+import "./styles.css";
 import { taskAdderINIT } from "./addTask.js";
 import { displayINIT } from "./display.js"; 
 import { tabINIT } from "./tabHandler.js";
