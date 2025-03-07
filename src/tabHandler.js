@@ -1,4 +1,4 @@
-import {displayShowAllTask, displayAppendTask} from "./display.js";
+import {displayShowAllTask, displayAppendTask, displayRemoveTask} from "./display.js";
 import {dbFetchLoadCount, dbLoadAll, dbSync, dbSyncLoadCount} from "./storageHandler.js";
 
 const tab = {
@@ -72,9 +72,29 @@ function createNode(task){
         }
     });
 
+    let index = tab.nodeList[tab.activeTab].length;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    
+    deleteButton.addEventListener("click", () => {
+
+        console.log(`index for deletion : ${index}`);
+
+        displayRemoveTask(index);
+
+        tab.dataList[tab.activeTab].splice(index, 1);
+        tab.nodeList[tab.activeTab].splice(index, 1);
+
+        console.log(tab.nodeList[tab.activeTab]);
+        dbSync(`${tab.activeTab}`, tab.dataList[tab.activeTab]);
+        
+    });
+
     parent.appendChild(nameField);
     parent.appendChild(expandButton);
     parent.appendChild(editButton);
+    parent.append(deleteButton);
     parent.classList.add("task");
 
     return parent;
@@ -196,7 +216,4 @@ export function tabFetchNewTask(newTask){
 
     dbSync(tab.activeTab, tab.dataList[tab.activeTab]);
 
-
 }
-
-

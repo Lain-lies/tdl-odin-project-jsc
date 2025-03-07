@@ -33,6 +33,22 @@ export function displayAppendTask(task){
 
 }
 
+export function displayRemoveTask(index){
+    
+    display.parent.removeChild(display.content[index]);
+    display.content.splice(index, 1);
+    displayUpdate();
+
+}
+
+function displayUpdate(){
+    
+    display.content.forEach(element => {
+        
+        display.parent.appendChild(element);
+        
+    });    
+}
 function displayClearAll(){
 
     display.content.forEach(element => display.parent.removeChild(element));
