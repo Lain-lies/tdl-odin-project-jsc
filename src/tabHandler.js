@@ -23,8 +23,7 @@ function createNode(task){
     nameField.setAttribute("readonly", "true");
     nameField.value = task.name;
 
-    const descriptionField = document.createElement("input");
-    descriptionField.setAttribute("type", "text");
+    const descriptionField = document.createElement("textarea");
     descriptionField.setAttribute("readonly", "true");
     descriptionField.value = task.description;
 
@@ -56,11 +55,30 @@ function createNode(task){
 
     });
 
+    const expandButton = document.createElement("button");
+    expandButton.textContent = "V";
+    let expandMode = 0;
+    expandButton.addEventListener("click", () => {
+        
+        if(!expandMode){
+            
+            parent.appendChild(descriptionField);
+            expandMode = 1;
+
+        }else{
+            
+            parent.removeChild(descriptionField);
+            expandMode = 0;
+        }
+    });
+
     parent.appendChild(nameField);
-    parent.appendChild(descriptionField);
+    parent.appendChild(expandButton);
     parent.appendChild(editButton);
     parent.classList.add("task");
+
     return parent;
+
 }
 
 function tabFetchDom(){

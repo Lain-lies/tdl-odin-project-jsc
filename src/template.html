@@ -31,24 +31,23 @@
         
         <form>
             
-            <label for="task-name">
-                Task Name: <input type = "text" id = "task-name" name = "taskName" required>
-            </label>
+            <label for="task-name">Task Name:</label>
+            <input type = "text" id = "task-name" name = "taskName" required>
     
-            <label for="task-description">
-                Task Description: <input type = "text" id = "task-description" name = "taskDescription" required>
-            </label>
+            <label for="task-description">Task Description: </label>
+            <textarea id = "task-description" name = "taskDescription" maxlength="45" required></textarea>
     
             <button type = "submit">+</button>
 
-
-    
         </form>
     
         <div id="display">
     
         </div>
     </div>
+
+
+    <button id = "clear">CLEAR ALL</button>
    
     
 </body>
