@@ -59,7 +59,7 @@ function createNode(task){
     parent.appendChild(nameField);
     parent.appendChild(descriptionField);
     parent.appendChild(editButton);
-
+    parent.classList.add("task");
     return parent;
 }
 
@@ -131,12 +131,12 @@ export function tabINIT(){
         if(i < 3){
 
             if(content === null){
+
                 tab.dataList.push([]);
                 tab.nodeList.push([]);
                 continue;
             
             }else{
-
 
                 tab.dataList.push(content);
                 tab.nodeList.push([]);

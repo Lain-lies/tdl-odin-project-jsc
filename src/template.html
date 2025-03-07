@@ -11,40 +11,45 @@
 
 <body>
     
-    <nav>
+    <div id="container">
+        <nav>
 
-        <div id = "default-tabs">
-
-            <button class = "nav-tabs">Main</button>
-            <button class = "nav-tabs">Favorites</button>
-            <button class = "nav-tabs">Project</button>
-
-        </div>
-
-        <div id = "divider"></div>
-        <button id = "add" class = "nav-tabs">Add Projects +</button>  
-
-        <div id = "dynamic-tabs"></div>
-
-    </nav>
+            <div id = "default-tabs">
     
-    <form>
+                <button class = "nav-tabs">Main</button>
+                <button class = "nav-tabs">Favorites</button>
+                <button class = "nav-tabs">Project</button>
+    
+            </div>
+    
+            <div id = "divider"></div>
+            <button id = "add" class = "nav-tabs">Add Projects +</button>  
+    
+            <div id = "dynamic-tabs"></div>
+    
+        </nav>
         
-        <label for="task-name">
-            Task Name: <input type = "text" id = "task-name" name = "taskName" required>
-        </label>
+        <form>
+            
+            <label for="task-name">
+                Task Name: <input type = "text" id = "task-name" name = "taskName" required>
+            </label>
+    
+            <label for="task-description">
+                Task Description: <input type = "text" id = "task-description" name = "taskDescription" required>
+            </label>
+    
+            <button type = "submit">+</button>
 
-        <label for="task-description">
-            Task Description: <input type = "text" id = "task-description" name = "taskDescription" required>
-        </label>
 
-        <button type = "submit">Add Task</button>
-
-    </form>
-
-    <div id="display" style = "margin-top: 1rem; border: 1px solid firebrick">
-
+    
+        </form>
+    
+        <div id="display">
+    
+        </div>
     </div>
+   
     
 </body>
 </html>
