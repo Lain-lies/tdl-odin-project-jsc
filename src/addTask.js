@@ -4,12 +4,11 @@ const task = {};
 
 function displayFetchDOM(){
     
-    const form = document.querySelector("form");
+    task.form = document.querySelector("form");
     task.name = document.querySelector("#task-name");
     task.description = document.querySelector("#task-description");
 
-    task.DOM = form;
-    displayBind(form);
+    displayBind(task.form);
 }
 
 function displayBind(form){
@@ -21,7 +20,7 @@ function displayBind(form){
 function displayFormSubmit(event){
     
     event.preventDefault();
-    const formData = new FormData(task.DOM);
+    const formData = new FormData(task.form);
     const valuesFromForm = [...formData.values()];
     task.name.value = "";
     task.description.value = "";

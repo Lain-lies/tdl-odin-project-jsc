@@ -9,15 +9,16 @@ const tab = {
 
 };
 
-function createTask (name, description) {
+function createTask (name, description, priority) {
     
-    return {name, description};
+    return {name, description, priority};
 
 }
 
 function createNode(task){
     
     const parent = document.createElement("div");
+
     const nameField = document.createElement("input");
     nameField.setAttribute("type", "text");
     nameField.setAttribute("readonly", "true");
@@ -26,6 +27,13 @@ function createNode(task){
     const descriptionField = document.createElement("textarea");
     descriptionField.setAttribute("readonly", "true");
     descriptionField.value = task.description;
+
+    const priorityField = document.createElement("select");
+    priorityField.options[0] = new Option("low", "0");
+    priorityField.options[1] = new Option("medium", "1");
+    priorityField.options[2] = new Option("high", "2");
+    priorityField.selectedIndex = task.priority;
+    priorityField.disabled = true;
 
     let mode = 0;
     const editButton = document.createElement("button");
@@ -38,6 +46,7 @@ function createNode(task){
             editButton.textContent = "done";
             nameField.removeAttribute("readonly", "true");
             descriptionField.removeAttribute("readonly", "true");
+            priorityField.disabled = false;
 
         }else{
 
@@ -45,8 +54,10 @@ function createNode(task){
             editButton.textContent = "edit";
             nameField.setAttribute("readonly", "true");
             descriptionField.setAttribute("readonly", "true");
+            priorityField.disabled = true;
             task.name = nameField.value;
             task.description = descriptionField.value;
+            task.priority = priorityField.selectedIndex;
             console.table(tab.dataList[tab.activeTab]);
 
         }
@@ -75,7 +86,7 @@ function createNode(task){
     let index = tab.nodeList[tab.activeTab].length;
 
     const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Delete";
+    deleteButton.textContent = "Del";
     
     deleteButton.addEventListener("click", () => {
 
@@ -92,6 +103,7 @@ function createNode(task){
     });
 
     parent.appendChild(nameField);
+    parent.appendChild(priorityField);
     parent.appendChild(expandButton);
     parent.appendChild(editButton);
     parent.append(deleteButton);
@@ -205,6 +217,7 @@ export function tabINIT(){
 export function tabFetchNewTask(newTask){
 
     const temp = createTask(...newTask);
+    console.log(temp);
     const tempNode = createNode(temp);
 
     tab.dataList[tab.activeTab].push(temp);
