@@ -36,6 +36,17 @@
             <label for="task-description">Task Description: </label>
             <textarea id = "task-description" name = "taskDescription" maxlength="45" required></textarea>
             
+            <label for="task-deadline">Deadline:</label>
+
+            <input
+            type="date"
+            id="start"
+            name="task-deadline"
+            min="2018-01-01"
+            max="2030-12-31"
+            required
+            />
+
             <label for="task-priority">Priority</label>
             <select name="taskPriority" id="task-priority">
             <option value="0">Low</option>

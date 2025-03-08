@@ -25,6 +25,7 @@ function displayFormSubmit(event){
     task.name.value = "";
     task.description.value = "";
     console.log(valuesFromForm);
+
     tabFetchNewTask(valuesFromForm);
     
 }

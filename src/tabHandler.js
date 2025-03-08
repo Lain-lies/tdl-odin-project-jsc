@@ -9,9 +9,9 @@ const tab = {
 
 };
 
-function createTask (name, description, priority) {
+function createTask (name, description, date, priority) {
     
-    return {name, description, priority};
+    return {name, description, date, priority};
 
 }
 
@@ -28,6 +28,11 @@ function createNode(task){
     descriptionField.setAttribute("readonly", "true");
     descriptionField.value = task.description;
 
+    const dateField = document.createElement("input");
+    dateField.setAttribute("type", "date");
+    dateField.setAttribute("readonly", "true");
+    dateField.value = task.date;
+    
     const priorityField = document.createElement("select");
     priorityField.options[0] = new Option("low", "0");
     priorityField.options[1] = new Option("medium", "1");
@@ -46,6 +51,7 @@ function createNode(task){
             editButton.textContent = "done";
             nameField.removeAttribute("readonly", "true");
             descriptionField.removeAttribute("readonly", "true");
+            dateField.removeAttribute("readonly", "true");
             priorityField.disabled = false;
 
         }else{
@@ -54,10 +60,14 @@ function createNode(task){
             editButton.textContent = "edit";
             nameField.setAttribute("readonly", "true");
             descriptionField.setAttribute("readonly", "true");
+            dateField.setAttribute("readonly", "true");
             priorityField.disabled = true;
+
             task.name = nameField.value;
             task.description = descriptionField.value;
+            task.date = dateField.value;
             task.priority = priorityField.selectedIndex;
+
             console.table(tab.dataList[tab.activeTab]);
 
         }
@@ -103,6 +113,7 @@ function createNode(task){
     });
 
     parent.appendChild(nameField);
+    parent.appendChild(dateField);
     parent.appendChild(priorityField);
     parent.appendChild(expandButton);
     parent.appendChild(editButton);
